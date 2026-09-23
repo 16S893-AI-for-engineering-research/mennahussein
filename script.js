@@ -46,7 +46,7 @@ function initCardGlow() {
 
 // ===== Animate progress bars when visible =====
 function initBars() {
-  const bars = document.querySelectorAll(".bar-fill");
+  const bars = document.querySelectorAll(".bar-fill, .chart-fill");
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {

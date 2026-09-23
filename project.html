@@ -24,40 +24,343 @@
   </nav>
 
   <main>
+    <!-- ===== Hero ===== -->
     <section class="reveal">
-      <span class="hero-eyebrow">Featured Work</span>
-      <h1 class="section-title">Project</h1>
+      <div class="eyebrow-row">
+        <span class="hero-eyebrow">Class Project Proposal</span>
+        <span class="pill">16.S897 Aerospace Systems</span>
+      </div>
+      <h1 class="section-title">
+        Agentic Configuration of Model Predictive Control
+        for Launch Vehicle Failure Mitigation
+      </h1>
       <p class="section-sub">
-        A tentative project pitch for this course, drawn from my ongoing
-        thesis work. Scope and direction are still being refined.
+        Can an AI supervisor learn to reconfigure a deterministic MPC problem
+        on the fly — the way a flight controller would — when a rocket
+        engine starts to fail?
       </p>
+
+      <div class="stat-grid">
+        <div class="stat-item">
+          <span class="stat-number">5</span>
+          <span class="stat-label">Failure dimensions modeled</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">5</span>
+          <span class="stat-label">Configurable MPC levers</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Baselines for comparison</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">1</span>
+          <span class="stat-label">Observe–configure–solve–evaluate–revise loop</span>
+        </div>
+      </div>
+
+      <div class="hero-cta" style="margin-top: 2rem;">
+        <a class="btn btn-primary" href="project-proposal.pdf" target="_blank" rel="noopener">Read Full Proposal (PDF)</a>
+        <a class="btn btn-secondary" href="#framework">Explore the Framework</a>
+      </div>
     </section>
 
+    <!-- ===== Motivation ===== -->
     <section class="reveal">
+      <h2 class="section-title">Motivation</h2>
+      <p class="section-sub">Why a fixed control formulation isn't enough when things go wrong mid-flight.</p>
+
+      <div class="split-grid">
+        <div class="card" style="padding: 2rem;">
+          <span class="card-icon">🔥</span>
+          <h3>The Problem</h3>
+          <p>
+            Launch vehicle propulsion failures can suddenly change thrust
+            magnitude, thrust symmetry, and available control authority
+            during ascent. A mild degradation may permit continued flight
+            with trajectory adjustment — a severe or asymmetric loss may
+            force retargeting, tighter constraints, or prioritizing
+            stability over the original mission.
+          </p>
+        </div>
+        <div class="card" style="padding: 2rem;">
+          <span class="card-icon">⚙️</span>
+          <h3>Why MPC — and Its Gap</h3>
+          <p>
+            Model Predictive Control naturally optimizes control actions
+            under dynamics and constraints. But MPC performance depends
+            strongly on <em>how</em> it's configured — horizon, objective
+            weights, terminal target, active constraints — and these are
+            usually fixed offline, even though the ideal formulation
+            shifts as the failure evolves.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Research Question ===== -->
+    <section class="reveal">
+      <h2 class="section-title">Research Question</h2>
+      <div class="quote-box">
+        Can an agentic AI supervisor use uncertain propulsion-health
+        information and model feedback to configure an appropriate MPC
+        problem for launch vehicle failure mitigation — while preserving
+        hard vehicle constraints?
+        <span class="quote-source">— Central question of this project</span>
+      </div>
+    </section>
+
+    <!-- ===== Framework Diagram ===== -->
+    <section class="reveal" id="framework">
+      <h2 class="section-title">Proposed Framework</h2>
+      <p class="section-sub">
+        The agent doesn't fly the rocket — it configures the problem the
+        solver flies. A verifier closes the loop with solver and constraint
+        feedback, enabling bounded replanning.
+      </p>
+
+      <div class="flow-diagram">
+        <div class="flow-row">
+          <div class="flow-node">
+            <span class="flow-icon">📡</span>
+            Failure-State<br />Estimate
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node highlight">
+            <span class="flow-icon">🤖</span>
+            Agentic<br />Supervisor
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <span class="flow-icon">📝</span>
+            MPC<br />Specification
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <span class="flow-icon">🧮</span>
+            MPC<br />Solver
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <span class="flow-icon">✅</span>
+            Verifier
+          </div>
+        </div>
+        <div class="flow-loop-label">
+          ↺ solver &amp; constraint feedback loops back to the Agentic Supervisor for bounded replanning
+        </div>
+      </div>
+
+      <div class="card-grid" style="margin-top: 1rem;">
+        <div class="card">
+          <span class="card-icon">📥</span>
+          <h3>Input</h3>
+          <p>
+            Synthetic structured states: failure type, onset time, residual
+            thrust or specific impulse, severity uncertainty, and current
+            vehicle state.
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🧭</span>
+          <h3>Agent's Role</h3>
+          <p>
+            Supervisory only — interprets failure state, selects from a
+            <em>bounded</em> set of MPC configurations, invokes the solver,
+            and evaluates the result. It never issues control commands
+            directly.
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🔁</span>
+          <h3>The Loop</h3>
+          <p>
+            Observe → configure → solve → evaluate → revise. Failed
+            verifier checks are returned to the agent for another bounded
+            configuration attempt.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== What the Agent Configures ===== -->
+    <section class="reveal">
+      <h2 class="section-title">What the Agent Can Configure</h2>
+      <p class="section-sub">
+        A bounded, approved configuration space — not free-form control generation.
+      </p>
+      <div class="config-grid">
+        <div class="config-card">
+          <span class="config-num">01</span>
+          <h3>Horizons</h3>
+          <p>Prediction and control horizon lengths for the MPC problem.</p>
+        </div>
+        <div class="config-card">
+          <span class="config-num">02</span>
+          <h3>Terminal Target</h3>
+          <p>Terminal trajectory or mission target given the failure severity.</p>
+        </div>
+        <div class="config-card">
+          <span class="config-num">03</span>
+          <h3>Objective Emphasis</h3>
+          <p>Trajectory tracking, propellant use, control effort, or attitude stabilization.</p>
+        </div>
+        <div class="config-card">
+          <span class="config-num">04</span>
+          <h3>Constraint Templates</h3>
+          <p>Approved constraint templates or constraint tightening rules.</p>
+        </div>
+        <div class="config-card">
+          <span class="config-num">05</span>
+          <h3>Mitigation Mode</h3>
+          <p>The overall response posture — continue, retarget, or stabilize-first.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Failure Scenario Matrix ===== -->
+    <section class="reveal">
+      <h2 class="section-title">Failure Scenarios Under Test</h2>
+      <p class="section-sub">
+        Test cases span severity and failure type — illustrative coverage
+        map of the scenario space the agent must handle. A reduced-order
+        launch vehicle model is used, avoiding dependence on an engine
+        dataset.
+      </p>
+      <div class="matrix-wrap">
+        <table class="matrix-grid">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Failure Mode</th>
+              <th>Mild</th>
+              <th>Moderate</th>
+              <th>Severe</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="label">Thrust Degradation</td>
+              <td class="sev-mild cov">✓</td>
+              <td class="sev-mod cov">✓</td>
+              <td class="sev-sev cov">✓</td>
+            </tr>
+            <tr>
+              <td class="label">Asymmetric / Single-Engine Loss</td>
+              <td class="sev-mild cov">✓</td>
+              <td class="sev-mod cov">✓</td>
+              <td class="sev-sev cov">✓</td>
+            </tr>
+            <tr>
+              <td class="label">Specific-Impulse Degradation</td>
+              <td class="sev-mild cov">✓</td>
+              <td class="sev-mod cov">✓</td>
+              <td class="sev-sev cov">✓</td>
+            </tr>
+            <tr>
+              <td class="label">Variable Onset Time</td>
+              <td class="sev-mild cov">✓</td>
+              <td class="sev-mod cov">✓</td>
+              <td class="sev-sev cov">✓</td>
+            </tr>
+            <tr>
+              <td class="label">Uncertain Residual Capability</td>
+              <td class="sev-mild cov">✓</td>
+              <td class="sev-mod cov">✓</td>
+              <td class="sev-sev cov">✓</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== Baselines / Evaluation ===== -->
+    <section class="reveal">
+      <h2 class="section-title">Methodology &amp; Evaluation</h2>
+      <p class="section-sub">
+        The agentic approach is benchmarked against three baselines that
+        share the same plant model and MPC solver — isolating the value of
+        agentic reasoning itself, not the underlying optimizer.
+      </p>
+
+      <div class="split-grid">
+        <div>
+          <h3 style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-light);">
+            Baselines Compared
+          </h3>
+          <div class="chart-block">
+            <div class="chart-row baseline">
+              <span class="chart-label">Fixed MPC Formulation</span>
+              <div class="bar-track"><div class="chart-fill" data-value="35"></div></div>
+              <span class="chart-value">low adaptivity</span>
+            </div>
+            <div class="chart-row baseline">
+              <span class="chart-label">Rule-Based Scheduler</span>
+              <div class="bar-track"><div class="chart-fill" data-value="55"></div></div>
+              <span class="chart-value">moderate</span>
+            </div>
+            <div class="chart-row baseline">
+              <span class="chart-label">Single-Shot LLM<br />(no solver feedback)</span>
+              <div class="bar-track"><div class="chart-fill" data-value="50"></div></div>
+              <span class="chart-value">no verification</span>
+            </div>
+            <div class="chart-row agentic">
+              <span class="chart-label">Agentic Supervisor<br />(this project)</span>
+              <div class="bar-track"><div class="chart-fill" data-value="90"></div></div>
+              <span class="chart-value">closed-loop</span>
+            </div>
+          </div>
+          <p class="chart-note">
+            Illustrative comparison of expected configuration adaptivity —
+            actual results will be measured empirically, not assumed.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-light);">
+            Evaluation Metrics
+          </h3>
+          <p style="color: var(--text-dim); line-height: 1.6; font-size: 0.92rem;">
+            Performance is judged relative to the best MPC configuration
+            found via offline search over the same approved configuration
+            space, using:
+          </p>
+          <div class="metric-list">
+            <span class="pill">Feasible-solution rate</span>
+            <span class="pill">Hard-constraint violations</span>
+            <span class="pill">Terminal trajectory error</span>
+            <span class="pill">Control effort &amp; saturation</span>
+            <span class="pill">Computational cost</span>
+            <span class="pill">Replanning iterations</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Expected Contribution ===== -->
+    <section class="reveal">
+      <h2 class="section-title">Expected Contribution</h2>
       <div class="project-card">
         <div>
-          <span class="status-badge">Tentative Pitch — Subject to Change</span>
-          <h2>Adaptive Detection and Mitigation of Liquid Rocket Engine Failures</h2>
+          <span class="status-badge">Tool-Constrained Agentic Framework</span>
+          <h2>Adaptive MPC Configuration Under Changing System Conditions</h2>
           <p style="color: var(--text-dim); margin-top: 0.75rem; line-height: 1.6;">
-            This tentative pitch builds on my thesis work on launch vehicle
-            propulsion failures. The idea is to combine a physics-based
-            model of liquid rocket engine failure propagation with a
-            stochastic detection layer that flags anomalous behavior early,
-            then feed that information into an adaptive controller that
-            adjusts vehicle trajectory in response. For this course, the
-            plan is to prototype a simplified version of this pipeline —
-            likely a reduced-order engine model, a basic anomaly detector,
-            and a simple adaptive control loop — as a proof of concept
-            rather than a full end-to-end system.
+            This project examines where agentic reasoning can augment
+            conventional optimization — not by replacing the controller,
+            but by making supervisory decisions about how an MPC problem
+            should be formulated in response to an evolving propulsion
+            failure. The agent operates within a bounded, verifiable
+            configuration space, with hard vehicle constraints preserved
+            throughout.
           </p>
           <div class="tag-list">
-            <span class="tag">Physics-Based Modeling</span>
-            <span class="tag">Stochastic Failure Detection</span>
-            <span class="tag">Adaptive Control</span>
+            <span class="tag">Agentic AI Supervision</span>
+            <span class="tag">Model Predictive Control</span>
+            <span class="tag">Launch Vehicle Failure Mitigation</span>
+            <span class="tag">Solver-in-the-Loop Verification</span>
           </div>
           <div class="hero-cta" style="margin-top: 1.5rem;">
-            <a class="btn btn-primary" href="#">View Details</a>
-            <a class="btn btn-secondary" href="#">Source Code</a>
+            <a class="btn btn-primary" href="project-proposal.pdf" target="_blank" rel="noopener">View Details</a>
+            <a class="btn btn-secondary" href="research.html">Research Background</a>
           </div>
         </div>
         <div class="project-visual">
@@ -66,22 +369,28 @@
       </div>
     </section>
 
+    <!-- ===== Open Questions ===== -->
     <section class="reveal">
       <h2 class="section-title">Open Questions</h2>
       <p class="section-sub">
-        Since this is still a tentative pitch, a few things are yet to be
-        decided.
+        Since this is a class project proposal, a few things are yet to be
+        finalized.
       </p>
       <div class="card-grid">
         <div class="card">
           <span class="card-icon">🧪</span>
           <h3>Scope</h3>
-          <p>How much of the detection-to-control pipeline is feasible to prototype within the course timeline.</p>
+          <p>How much of the observe–configure–solve–evaluate–revise loop is feasible to prototype within the course timeline.</p>
         </div>
         <div class="card">
           <span class="card-icon">📊</span>
           <h3>Data / Simulation</h3>
-          <p>Whether to use simulated failure data, published datasets, or a simplified engine model built for this project.</p>
+          <p>Exact fidelity of the reduced-order launch vehicle model and how failure states will be synthetically generated.</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🛡️</span>
+          <h3>Constraint Bounds</h3>
+          <p>How the approved configuration space and constraint templates will be defined to guarantee hard constraints are never violated.</p>
         </div>
       </div>
     </section>
