@@ -5,7 +5,8 @@ A multi-page personal academic website featuring animated visuals.
 ## Pages
 - `index.html` — Introduction / bio
 - `research.html` — Research Interests (launch vehicle failures, liquid rocket engine failure propagation, mitigation, adaptive trajectory control)
-- `project.html` — Featured project(s)
+- `project.html` — Featured project (agentic MPC configuration for launch vehicle failure mitigation)
+- `devlog.html` — Dev Log / build history, kept in sync with the site's git history
 
 ## Structure
 - `style.css` — shared styling and animations (animated gradient background, starfield, scroll reveals, hover glow, orbiting element)

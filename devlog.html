@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menna Hussein — Dev Log</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-animated"></div>
+  <div class="stars"></div>
+  <div class="orbit-wrap">
+    <div class="orbit-ring"></div>
+    <div class="orbit-dot"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-logo">Menna Hussein</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Introduction</a></li>
+      <li><a href="research.html">Research Interests</a></li>
+      <li><a href="project.html">Project</a></li>
+      <li><a href="devlog.html">Dev Log</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="reveal">
+      <div class="eyebrow-row">
+        <span class="hero-eyebrow">Behind the Scenes</span>
+        <span class="pill">Building in Public</span>
+      </div>
+      <h1 class="section-title">Dev Log</h1>
+      <p class="section-sub">
+        A running log of how this site and the underlying project have
+        evolved — what shipped, what changed, and why. Kept in sync with
+        the site's own git history.
+      </p>
+    </section>
+
+    <section class="reveal">
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="log-meta">
+            <span class="log-date">Sep 23, 2026</span>
+            <span class="log-tag">Project Page</span>
+          </div>
+          <h3>Rebuilt the Project page around the real proposal</h3>
+          <p>
+            Replaced the placeholder "tentative pitch" content with the
+            actual class project proposal:
+            <em>Agentic Configuration of Model Predictive Control for
+            Launch Vehicle Failure Mitigation</em>. Added a full narrative
+            flow — motivation, research question, framework diagram,
+            configurable MPC levers, a failure-scenario coverage matrix,
+            baseline comparison chart, and evaluation metrics.
+          </p>
+          <ul>
+            <li>New animated flow diagram: Failure-State → Agent → MPC Spec → Solver → Verifier</li>
+            <li>Failure-scenario coverage table (mode × severity)</li>
+            <li>Illustrative baseline comparison bars (fixed MPC / rule-based / single-shot LLM / agentic)</li>
+            <li>Linked the full proposal PDF directly from the page</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="log-meta">
+            <span class="log-date">Sep 23, 2026</span>
+            <span class="log-tag content">Content</span>
+          </div>
+          <h3>Added the project proposal document</h3>
+          <p>
+            Uploaded the formal 16.S897 class project proposal PDF to the
+            repo, laying the groundwork for the Project page rewrite that
+            followed.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="log-meta">
+            <span class="log-date">Sep 15, 2026</span>
+            <span class="log-tag shipped">Shipped</span>
+          </div>
+          <h3>Session log export</h3>
+          <p>
+            Added an exported session log capturing the build history of
+            the site itself — a transparent record of the agentic workflow
+            used to construct this portfolio.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="log-meta">
+            <span class="log-date">Sep 15, 2026</span>
+            <span class="log-tag">Content</span>
+          </div>
+          <h3>Bio, education, and interests pass</h3>
+          <p>
+            Updated the Introduction page with accurate education history,
+            current research focus, and personal interests. Removed the
+            placeholder "research journey" section and added an initial
+            tentative project pitch on the Project page.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="log-meta">
+            <span class="log-date">Sep 15, 2026</span>
+            <span class="log-tag shipped">Shipped</span>
+          </div>
+          <h3>Site launch: three-page animated portfolio</h3>
+          <p>
+            Stood up the initial multi-page site — Introduction, Research
+            Interests, and Project — with a shared animated background,
+            starfield, scroll-reveal transitions, and hover-glow cards.
+          </p>
+          <ul>
+            <li>Animated gradient background + twinkling starfield</li>
+            <li>Scroll-triggered reveal animations via IntersectionObserver</li>
+            <li>Orbiting rocket-themed accent element</li>
+            <li>Shared nav, card, and progress-bar components across pages</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="reveal">
+      <h2 class="section-title">What's Next</h2>
+      <div class="card-grid">
+        <div class="card">
+          <span class="card-icon">🧮</span>
+          <h3>Reduced-Order Model</h3>
+          <p>Stand up the initial launch vehicle plant model and baseline MPC solver.</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🤖</span>
+          <h3>Agent Loop Prototype</h3>
+          <p>Wire up the first observe–configure–solve–evaluate–revise loop with a bounded configuration space.</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">📈</span>
+          <h3>Baseline Comparisons</h3>
+          <p>Run the fixed, rule-based, and single-shot LLM baselines to establish real comparison numbers.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Menna Hussein. Built with curiosity and code.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

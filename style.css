@@ -762,7 +762,7 @@ section {
   }
 }
 
-/* ========== Timeline (Research page) ========== */
+/* ========== Timeline (Research page / Dev Log) ========== */
 .timeline {
   border-left: 2px solid var(--card-border);
   padding-left: 1.5rem;
@@ -785,6 +785,62 @@ section {
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 10px var(--accent);
+}
+
+/* Dev Log specifics */
+.log-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.4rem;
+}
+
+.log-date {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.log-tag {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  color: var(--accent);
+  background: rgba(110, 231, 249, 0.08);
+}
+
+.log-tag.shipped {
+  color: var(--accent2);
+  border-color: rgba(167, 139, 250, 0.3);
+  background: rgba(167, 139, 250, 0.08);
+}
+
+.log-tag.content {
+  color: var(--accent3);
+  border-color: rgba(244, 114, 182, 0.3);
+  background: rgba(244, 114, 182, 0.08);
+}
+
+.timeline-item h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+  color: var(--text-light);
+}
+
+.timeline-item p {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.timeline-item ul {
+  margin: 0.5rem 0 0 1.1rem;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 /* ========== Footer ========== */
