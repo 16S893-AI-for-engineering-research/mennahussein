@@ -762,6 +762,61 @@ section {
   }
 }
 
+/* ========== Figures / Images ========== */
+.figure-block {
+  margin: 2rem 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+}
+
+.figure-block img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.figure-block.hero-figure img {
+  max-height: 420px;
+  object-fit: cover;
+}
+
+.figure-caption {
+  padding: 0.85rem 1.25rem;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--card-border);
+  line-height: 1.5;
+}
+
+.figure-caption a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.figure-caption a:hover {
+  text-decoration: underline;
+}
+
+.figure-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 860px) {
+  .figure-grid {
+    grid-template-columns: 1.1fr 1fr;
+    align-items: start;
+  }
+}
+
+.figure-block.literature img {
+  background: #fff;
+  padding: 0.75rem;
+}
+
 /* ========== Timeline (Research page / Dev Log) ========== */
 .timeline {
   border-left: 2px solid var(--card-border);

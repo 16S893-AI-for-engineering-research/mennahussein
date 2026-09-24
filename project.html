@@ -64,6 +64,19 @@
         <a class="btn btn-primary" href="project-proposal.pdf" target="_blank" rel="noopener">Read Full Proposal (PDF)</a>
         <a class="btn btn-secondary" href="#framework">Explore the Framework</a>
       </div>
+
+      <figure class="figure-block hero-figure" style="margin-top: 2.5rem;">
+        <img
+          src="assets/rocket-launch.jpg"
+          alt="Artemis II SLS rocket lifting off from Launch Pad 39B"
+          loading="lazy"
+        />
+        <figcaption class="figure-caption">
+          Artemis II SLS liftoff from Launch Pad 39B — the ascent phase where
+          propulsion failures unfold in seconds and control authority is most
+          contested. Credit: NASA / Kennedy Space Center.
+        </figcaption>
+      </figure>
     </section>
 
     <!-- ===== Motivation ===== -->
@@ -97,6 +110,22 @@
           </p>
         </div>
       </div>
+
+      <figure class="figure-block literature" style="max-width: 640px; margin: 2rem auto 0;">
+        <img
+          src="assets/mpc-literature-diagram.png"
+          alt="Diagram of a receding-horizon Model Predictive Control loop tracking a fixed reference signal"
+          loading="lazy"
+        />
+        <figcaption class="figure-caption">
+          Classic receding-horizon MPC concept: at each step the controller
+          predicts a trajectory over a finite horizon, applies only the first
+          control action, then re-optimizes as new state information arrives.
+          This project asks <em>who configures that horizon and objective</em>
+          when the underlying vehicle has just failed. Figure: Tsesea, CC BY-SA 4.0,
+          via <a href="https://commons.wikimedia.org/wiki/File:Model_predictive_control.png" target="_blank" rel="noopener">Wikimedia Commons</a>.
+        </figcaption>
+      </figure>
     </section>
 
     <!-- ===== Research Question ===== -->
