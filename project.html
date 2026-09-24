@@ -135,11 +135,11 @@
 
     <!-- ===== Current Practice / The Gap ===== -->
     <section class="reveal">
-      <h2 class="section-title">What's Already Standard Practice</h2>
+      <h2 class="section-title">Current Practice in Launch Vehicle Control</h2>
       <p class="section-sub">
         Launch vehicle flight control is not designed from scratch — it
-        relies on decades of mature, well-proven techniques. Understanding
-        what's already solved clarifies exactly where the gap is.
+        builds on established techniques. Understanding what's already in
+        place clarifies exactly where the gap is.
       </p>
 
       <div class="card-grid">
@@ -149,19 +149,19 @@
           <p>
             Modern launch vehicles already fly with closed-loop guidance
             (e.g., powered explicit guidance-style algorithms) that
-            continuously re-targets the ascent trajectory to reach orbital
-            insertion conditions, compensating for winds, dispersions, and
-            minor off-nominal performance in real time.
+            re-targets the ascent trajectory to reach orbital insertion
+            conditions, compensating for winds, dispersions, and minor
+            off-nominal performance in real time.
           </p>
         </div>
         <div class="card">
           <span class="card-icon">🎛️</span>
-          <h3>Extensively Tuned Inner-Loop Control</h3>
+          <h3>Offline-Tuned Inner-Loop Control</h3>
           <p>
             The inner-loop flight controller — attitude and rate control,
-            actuator commands — is generally designed and extensively tuned
+            actuator commands — is generally designed and tuned
             <em>offline</em>, with gain schedules and stability margins
-            validated across the expected flight envelope well before launch.
+            validated across the expected flight envelope before launch.
           </p>
         </div>
         <div class="card">
@@ -177,12 +177,12 @@
       </div>
 
       <div class="quote-box" style="margin-top: 1.75rem; font-size: 1rem;">
-        The gap: nominal guidance and inner-loop control are mature and
-        robust for <em>anticipated</em> dispersions, but the optimization
-        problem itself — horizon, objective, constraints — is not
-        reconfigured online in response to an evolving, uncertain propulsion
-        failure. That reconfiguration decision is what this project asks an
-        agentic supervisor to make.
+        The gap: nominal guidance and inner-loop control handle
+        <em>anticipated</em> dispersions well, but the optimization problem
+        itself — horizon, objective, constraints — is not reconfigured
+        online in response to an evolving, uncertain propulsion failure.
+        That reconfiguration decision is what this project asks an agentic
+        supervisor to make.
       </div>
     </section>
 
