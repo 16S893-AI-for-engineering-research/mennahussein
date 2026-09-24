@@ -104,14 +104,19 @@
         </div>
         <div class="card" style="padding: 2rem;">
           <span class="card-icon">⚙️</span>
-          <h3>Online MPC and Its Limitation</h3>
+          <h3>Current Limitation</h3>
           <p>
-            Model Predictive Control naturally optimizes control actions
-            under dynamics and constraints. But MPC performance depends
-            strongly on <em>how</em> it's configured — horizon, objective
-            weights, terminal target, active constraints — and these are
-            usually fixed offline, even though the ideal formulation
-            shifts as the failure evolves.
+            Guidance laws like Powered Explicit Guidance (PEG) are
+            closed-form: at each cycle they solve an analytic targeting
+            equation for the remaining burn, which is fast and flight-proven
+            but does not explicitly optimize over path constraints, actuator
+            limits, or competing objectives. Model Predictive Control (MPC)
+            instead solves a numerical optimization over a finite horizon,
+            explicitly handling constraints and objective trade-offs — but
+            <em>how</em> that optimization is set up (horizon length,
+            objective weights, terminal target, active constraints) is
+            normally fixed offline, even though the ideal formulation shifts
+            as a failure evolves.
           </p>
         </div>
       </div>
