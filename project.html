@@ -68,16 +68,18 @@
       <figure class="figure-block hero-figure" style="margin-top: 2.5rem;">
         <img
           src="assets/rocket-launch.jpg"
-          alt="SpaceX Falcon 9 lifting off at night on the CRS-1 mission"
+          alt="Antares rocket suffering a catastrophic in-flight failure moments after liftoff"
           loading="lazy"
         />
         <figcaption class="figure-caption">
-          Falcon 9 lifting off on the CRS-1 mission (Oct. 7, 2012) — about 79
-          seconds into this flight, Engine 1 lost pressure and shut down. The
-          flight computer autonomously extended the burn on the remaining
-          eight engines to still deliver Dragon to orbit, a real-world example
-          of the asymmetric thrust-loss scenarios this project targets.
-          Credit: NASA / Glenn Benson.
+          Orbital Sciences' Antares rocket suffers a catastrophic anomaly
+          moments after liftoff on the Orb-3 mission (Oct. 28, 2014) — a
+          turbopump failure in one of its AJ-26 engines triggered an
+          uncontained propulsion failure roughly 15 seconds into flight.
+          Range Safety issued a destruct command soon after. This is the kind
+          of abrupt, severe propulsion failure this project's failure-state
+          estimate is meant to capture and respond to before it becomes
+          unrecoverable. Credit: NASA / Joel Kowsky.
         </figcaption>
       </figure>
     </section>
@@ -129,6 +131,59 @@
           via <a href="https://commons.wikimedia.org/wiki/File:Model_predictive_control.png" target="_blank" rel="noopener">Wikimedia Commons</a>.
         </figcaption>
       </figure>
+    </section>
+
+    <!-- ===== Current Practice / The Gap ===== -->
+    <section class="reveal">
+      <h2 class="section-title">What's Already Standard Practice</h2>
+      <p class="section-sub">
+        Launch vehicle flight control is not designed from scratch — it
+        relies on decades of mature, well-proven techniques. Understanding
+        what's already solved clarifies exactly where the gap is.
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <span class="card-icon">🧭</span>
+          <h3>Closed-Loop Nominal Guidance</h3>
+          <p>
+            Modern launch vehicles already fly with closed-loop guidance
+            (e.g., powered explicit guidance-style algorithms) that
+            continuously re-targets the ascent trajectory to reach orbital
+            insertion conditions, compensating for winds, dispersions, and
+            minor off-nominal performance in real time.
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🎛️</span>
+          <h3>Extensively Tuned Inner-Loop Control</h3>
+          <p>
+            The inner-loop flight controller — attitude and rate control,
+            actuator commands — is generally designed and extensively tuned
+            <em>offline</em>, with gain schedules and stability margins
+            validated across the expected flight envelope well before launch.
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🚨</span>
+          <h3>Bounded Contingency Logic</h3>
+          <p>
+            Response to major propulsion anomalies is typically limited to a
+            small set of pre-briefed contingency modes — abort triggers,
+            engine-out throttle bounds, or fixed retargeting rules — rather
+            than a re-optimized formulation tailored to the specific failure.
+          </p>
+        </div>
+      </div>
+
+      <div class="quote-box" style="margin-top: 1.75rem; font-size: 1rem;">
+        The gap: nominal guidance and inner-loop control are mature and
+        robust for <em>anticipated</em> dispersions, but the optimization
+        problem itself — horizon, objective, constraints — is not
+        reconfigured online in response to an evolving, uncertain propulsion
+        failure. That reconfiguration decision is what this project asks an
+        agentic supervisor to make.
+      </div>
     </section>
 
     <!-- ===== Research Question ===== -->
