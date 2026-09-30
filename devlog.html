@@ -20,6 +20,7 @@
       <li><a href="index.html">Introduction</a></li>
       <li><a href="research.html">Research Interests</a></li>
       <li><a href="project.html">Project</a></li>
+      <li><a href="figure.html">Regenerated Figure</a></li>
       <li><a href="devlog.html">Dev Log</a></li>
     </ul>
   </nav>
@@ -40,6 +41,28 @@
 
     <section class="reveal">
       <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="log-meta">
+            <span class="log-date">Sep 30, 2026</span>
+            <span class="log-tag shipped">Shipped</span>
+          </div>
+          <h3>Regenerated Figure page</h3>
+          <p>
+            Added a new tab that re-derives and re-plots a result from
+            Blackmore, Açıkmeşe &amp; Carson's
+            <em>"Lossless convexification of control constraints for a class
+            of nonlinear optimal control problems"</em> (Systems &amp;
+            Control Letters, 2012) — the nonlinear-gravity soft-landing
+            trajectory and thrust-magnitude profile from Problem 3 /
+            Theorem 1.
+          </p>
+          <ul>
+            <li>Re-solved the optimal control problem from scratch in Python (SciPy SLSQP, direct transcription, N = 15 steps)</li>
+            <li>Interactive Plotly recreation of the descent trajectory and thrust-magnitude vs. time plots, replacing the paper's static figure</li>
+            <li>Confirms the thrust-acceleration magnitude saturates at the nonconvex bounds ε₁/ε₂, exactly as the lossless convexification theorem predicts</li>
+          </ul>
+        </div>
 
         <div class="timeline-item">
           <div class="log-meta">

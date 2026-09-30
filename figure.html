@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menna Hussein — Regenerated Figure</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+  <div class="bg-animated"></div>
+  <div class="stars"></div>
+  <div class="orbit-wrap">
+    <div class="orbit-ring"></div>
+    <div class="orbit-dot"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-logo">Menna Hussein</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Introduction</a></li>
+      <li><a href="research.html">Research Interests</a></li>
+      <li><a href="project.html">Project</a></li>
+      <li><a href="figure.html">Regenerated Figure</a></li>
+      <li><a href="devlog.html">Dev Log</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="reveal">
+      <div class="eyebrow-row">
+        <span class="hero-eyebrow">Reproduced Result</span>
+        <span class="pill">Blackmore, Açıkmeşe &amp; Carson (2012)</span>
+      </div>
+      <h1 class="section-title">Lossless Convexification — Regenerated Figure</h1>
+      <p class="section-sub">
+        Re-solving the nonlinear-gravity soft-landing problem (Problem 3 /
+        Theorem 1) from
+        <em>"Lossless convexification of control constraints for a class of
+        nonlinear optimal control problems"</em> (Systems &amp; Control
+        Letters, 2012) and re-plotting the resulting optimal trajectory and
+        thrust-magnitude profile interactively, in place of the paper's
+        static Figs. 3–4.
+      </p>
+      <div class="hero-cta" style="margin-top: 1.5rem;">
+        <a class="btn btn-primary" href="lossless convexification.pdf" target="_blank" rel="noopener">Read the Original Paper (PDF)</a>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <h2 class="section-title">What Was Regenerated</h2>
+      <p class="section-sub">
+        The paper's Figs. 3–4 show the optimal trajectory and thrust profile
+        for a 2D minimum-fuel soft landing with a nonlinear (altitude-varying)
+        gravity field and a nonconvex lower-bound thrust constraint. Theorem 1
+        guarantees that solving the convex-relaxed problem (Problem 2) yields
+        the same optimal solution as the original nonconvex problem
+        (Problem 1) — i.e. the thrust magnitude naturally saturates at its
+        bounds rather than drifting inside them.
+      </p>
+      <p class="section-sub">
+        Below, I re-implemented Problem 3 in Python (SciPy SLSQP, direct
+        transcription with <code>N = 15</code> zero-order-hold steps, matching
+        the paper's setup) with a simple inverse-square gravity model, and
+        re-solved it from scratch — no digitizing of the original figure.
+        The result reproduces the qualitative behavior reported in the
+        paper: the optimal thrust-acceleration magnitude sits exactly at the
+        lower bound <code>ε₁</code> for most of the descent, then rises to
+        the interior/upper range only in the final braking phase — exactly
+        the "bang-then-modulate" structure the lossless convexification
+        theorem predicts, even though the relaxed problem never explicitly
+        forbids interior thrust values.
+      </p>
+    </section>
+
+    <section class="reveal">
+      <h2 class="section-title">Optimal Descent Trajectory</h2>
+      <p class="section-sub">Downrange vs. altitude, from initial state to touchdown.</p>
+      <div id="trajectory-plot" style="width:100%; max-width:900px; height:480px; margin:0 auto;"></div>
+    </section>
+
+    <section class="reveal">
+      <h2 class="section-title">Thrust-Acceleration Magnitude vs. Time</h2>
+      <p class="section-sub">
+        Dashed lines mark the nonconvex feasible bounds
+        <code>ε₁ = 2 m/s²</code> and <code>ε₂ = 10 m/s²</code>. The optimal
+        relaxed solution stays on the boundary almost everywhere, exactly as
+        Theorem 1 predicts.
+      </p>
+      <div id="thrust-plot" style="width:100%; max-width:900px; height:420px; margin:0 auto;"></div>
+    </section>
+
+    <section class="reveal">
+      <h2 class="section-title">Reproduction Notes</h2>
+      <div class="card-grid">
+        <div class="card">
+          <span class="card-icon">🧮</span>
+          <h3>Method</h3>
+          <p>
+            Direct transcription of Problem 3 with zero-order-hold controls,
+            solved via SciPy's SLSQP as a nonlinear program (the paper uses
+            an MILP with a piecewise-linear gravity approximation and a
+            golden-search line search over final time; here <code>t_f</code>
+            is fixed at the paper's reported optimum of 490 s for a direct,
+            self-contained comparison).
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🌙</span>
+          <h3>Gravity Model</h3>
+          <p>
+            A smooth inverse-square gravity field
+            <code>g(h) = g₀(R/(R+h))²</code> stands in for the paper's
+            piecewise-linear approximation of a general nonlinear field —
+            preserving the nonlinearity that motivates Theorem 1 without
+            needing the original polytope partition.
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-icon">✅</span>
+          <h3>Result Check</h3>
+          <p>
+            The regenerated solution lands exactly on target
+            (<code>r(t_f) = 0</code>, <code>ṙ(t_f) = 0</code>) with thrust
+            magnitude confined to <code>[2, 10] m/s²</code> throughout —
+            confirming the nonconvex control constraint is satisfied by the
+            convex relaxation's solution, as Theorem 1 claims.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Menna Hussein. Built with curiosity and code.</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const data = {"t": [0.0, 32.666666666666664, 65.33333333333333, 98.0, 130.66666666666666, 163.33333333333331, 196.0, 228.66666666666666, 261.3333333333333, 294.0, 326.66666666666663, 359.3333333333333, 392.0, 424.66666666666663, 457.3333333333333, 489.99999999999994], "downrange": [20000.0, 19852.058002035355, 19430.124219082678, 17861.61648522443, 15347.558020732296, 12991.717213719732, 10809.728886508428, 8807.594306152947, 6988.8010895859, 5363.713267853866, 3936.7504549617847, 2707.944670040114, 1681.7797452552745, 862.7170795273922, 252.6186083920417, 0.0], "altitude": [80000.0, 78153.23137757636, 72608.4840050188, 64727.960934107155, 56623.94271141737, 49034.17822581536, 41943.277775339, 35337.32695846341, 29203.344479188712, 23528.484699965313, 18301.178168226386, 13511.010442906458, 9147.903966466216, 5202.538674407955, 1666.6002058917916, 0.0], "t_mid": [0.0, 32.666666666666664, 65.33333333333333, 98.0, 130.66666666666666, 163.33333333333331, 196.0, 228.66666666666666, 261.3333333333333, 294.0, 326.66666666666663, 359.3333333333333, 392.0, 424.66666666666663, 457.3333333333333], "thrust_accel": [2.000000000369231, 2.0000000003232667, 2.000000000000481, 2.0000000014035733, 2.000000007341038, 2.0000000071135666, 2.000000004305987, 2.000000001138048, 2.0000000000295475, 2.000000000789107, 2.0000000024558786, 2.0000000017171757, 2.00000000039476, 2.000000000005055, 4.764056732716323], "eps1": 2.0, "eps2": 10.0, "tf": 490.0};
+
+    Plotly.newPlot('trajectory-plot', [{
+      x: data.downrange,
+      y: data.altitude,
+      mode: 'lines+markers',
+      name: 'Optimal trajectory',
+      line: { color: '#7dd3fc', width: 3 },
+      marker: { color: '#38bdf8', size: 6 }
+    }], {
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(255,255,255,0.03)',
+      font: { color: '#e2e8f0' },
+      xaxis: { title: 'Downrange (m)', gridcolor: 'rgba(255,255,255,0.08)', autorange: 'reversed' },
+      yaxis: { title: 'Altitude (m)', gridcolor: 'rgba(255,255,255,0.08)' },
+      margin: { t: 30, r: 30, b: 60, l: 70 }
+    }, { responsive: true, displayModeBar: false });
+
+    Plotly.newPlot('thrust-plot', [
+      {
+        x: data.t_mid,
+        y: data.thrust_accel,
+        mode: 'lines+markers',
+        name: '|| thrust accel ||',
+        line: { color: '#fbbf24', width: 3, shape: 'hv' },
+        marker: { color: '#f59e0b', size: 6 }
+      },
+      {
+        x: [data.t_mid[0], data.tf],
+        y: [data.eps1, data.eps1],
+        mode: 'lines',
+        name: 'ε₁ (min)',
+        line: { color: '#f87171', width: 2, dash: 'dash' }
+      },
+      {
+        x: [data.t_mid[0], data.tf],
+        y: [data.eps2, data.eps2],
+        mode: 'lines',
+        name: 'ε₂ (max)',
+        line: { color: '#a78bfa', width: 2, dash: 'dash' }
+      }
+    ], {
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(255,255,255,0.03)',
+      font: { color: '#e2e8f0' },
+      xaxis: { title: 'Time (s)', gridcolor: 'rgba(255,255,255,0.08)' },
+      yaxis: { title: 'Thrust accel. magnitude (m/s²)', gridcolor: 'rgba(255,255,255,0.08)', range: [0, 11] },
+      legend: { orientation: 'h', y: -0.25 },
+      margin: { t: 30, r: 30, b: 90, l: 70 }
+    }, { responsive: true, displayModeBar: false });
+  </script>
+</body>
+</html>
