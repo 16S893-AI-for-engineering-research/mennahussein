@@ -1,0 +1,20 @@
+{
+  "reported_final_time_s": 490.0,
+  "intervals": 14,
+  "initial_downrange_velocity_m_s": 200.0,
+  "polygon": "outer",
+  "gravity": {
+    "altitude_m": [0, 10000, 30000, 50000, 70000, 90000, 100000],
+    "tangent_altitudes_m": [0, 20000, 40000, 60000, 80000, 100000],
+    "surface_gravity_m_s2": 9.78,
+    "radius_m": 100000.0
+  },
+  "provenance": {
+    "reported_final_time_s": "Section 5 reports 490 s; held fixed for the main comparison, not claimed as an independently recovered optimum.",
+    "intervals": "Figure 3 contains 15 state vertices, hence 14 ZOH intervals. The text instead states N=15 steps.",
+    "initial_downrange_velocity_m_s": "Figure 4 starts at approximately +200 m/s; the text instead states zero initial velocity.",
+    "gravity": "Inverse-square parameters inferred from the red Figure 2 curve, rounded to g0=9.78 m/s^2 and R=100 km. The blue curve's interior knots are approximately 10,30,50,70,90 km; tangent centers 0,20,40,60,80,100 km explain Figures 2 and 4. Numerical constants and exact partitions are not supplied in the text. First/last zones are clipped to the plotted altitude domain.",
+    "polygon": "Axis-aligned outer 32-gon inferred from the Figure 4 component plateaus and small norm overshoots. This differs from the inner polygon specified in Section 5. The maximum possible norm is 10/cos(pi/32)=10.048386 m/s^2. The strict inner-polygon alternative is also solved and reported.",
+    "domain": "Altitude constrained to the Figure 2 model domain [0,100] km; numerical envelopes |downrange|<=100 km and |velocity components|<=2000 m/s are inactive at the reported solution. No monotonic-descent constraints are imposed."
+  }
+}

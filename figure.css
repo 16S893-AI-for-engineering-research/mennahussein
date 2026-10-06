@@ -1,0 +1,74 @@
+/* Scoped presentation for the reproducible Figure 3 experiment. */
+.figure-page { line-height: 1.65; }
+.figure-page .section-sub { max-width: 900px; }
+.figure-page h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.15; margin: 1rem 0; }
+.figure-page a:not(.btn) { color: var(--accent); text-underline-offset: 3px; }
+.figure-page a:focus-visible, .figure-page summary:focus-visible,
+.figure-table-wrap:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+.figure-page .hero-cta { margin: 1.5rem 0; flex-wrap: wrap; }
+.figure-page .hero-eyebrow, .figure-page .hero-cta { opacity: 1; animation: none; }
+.figure-note {
+  border-left: 3px solid var(--accent);
+  background: rgba(110, 231, 249, .055);
+  padding: 1.1rem 1.3rem;
+  margin: 1.75rem 0;
+  border-radius: 0 10px 10px 0;
+  color: #c8d2e8;
+  font-size: .95rem;
+}
+.figure-note strong { color: var(--text-light); }
+.figure-note.warning { border-color: #fbbf24; background: rgba(251, 191, 36, .055); }
+.figure-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.paper-panel { min-width: 0; overflow: hidden; border: 1px solid var(--card-border); border-radius: 12px; background: var(--card-bg); }
+.figure-label { display: flex; justify-content: space-between; gap: .5rem; padding: .9rem 1rem; font-size: .8rem; color: var(--text-dim); }
+.figure-label span:first-child { color: var(--accent); font-weight: 600; }
+.paper-panel > a { display: flex; align-items: center; background: #fff; aspect-ratio: 1; }
+.paper-panel img { display: block; width: 100%; height: auto; }
+.paper-panel figcaption { color: var(--text-dim); font-size: .82rem; padding: .9rem 1rem; }
+.figure-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0 1rem; }
+.figure-metrics > div { border: 1px solid var(--card-border); border-radius: 10px; padding: 1.2rem; background: var(--card-bg); }
+.figure-metrics strong { display: block; color: var(--accent); font-size: 1.8rem; line-height: 1.3; }
+.figure-metrics span { display: block; margin-top: .5rem; font-size: .83rem; color: var(--text-dim); }
+.figure-caption, .figure-citation { font-size: .88rem; color: var(--text-dim); margin: 1rem 0; }
+.figure-details { margin: 1.2rem 0; border: 1px solid var(--card-border); border-radius: 10px; background: var(--card-bg); }
+.figure-details summary { padding: 1rem 1.2rem; cursor: pointer; color: var(--text-light); font-weight: 600; }
+.figure-details[open] summary { border-bottom: 1px solid var(--card-border); margin-bottom: 1rem; }
+.figure-details p { margin: 1rem 1.3rem; color: var(--text-dim); font-size: .92rem; }
+.scientific-plot { display: block; width: calc(100% - 2rem); height: auto; max-width: 850px; margin: 1rem auto; background: white; border-radius: 4px; }
+.square-plot { max-width: 580px; }
+.profile-plot { max-width: 760px; }
+.figure-equations, .figure-code { padding: 1.5rem; margin: 1.5rem 0; border-radius: 10px; background: rgba(0, 0, 0, .25); border: 1px solid var(--card-border); overflow-x: auto; }
+.figure-equations { font-family: "Cambria Math", Georgia, serif; font-size: 1.05rem; }
+.figure-equations > div { margin: .35rem 0; }
+.figure-code { font-size: .86rem; line-height: 1.9; }
+.figure-table-wrap { overflow-x: auto; border: 1px solid var(--card-border); border-radius: 10px; }
+.figure-table { border-collapse: collapse; width: 100%; min-width: 660px; text-align: left; font-size: .9rem; }
+.figure-table th, .figure-table td { padding: 1rem; vertical-align: top; border-bottom: 1px solid var(--card-border); }
+.figure-table thead { background: rgba(110, 231, 249, .07); }
+.figure-table tbody th { width: 18%; font-weight: 600; }
+.figure-table td { color: #b6c2da; width: 41%; }
+.figure-table tbody tr:last-child > * { border-bottom: 0; }
+.check-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--card-border); border: 1px solid var(--card-border); border-radius: 10px; overflow: hidden; }
+.check-grid > div { background: #11182b; padding: 1.2rem; }
+.check-grid dt { color: var(--text-dim); font-size: .85rem; }
+.check-grid dd { margin-top: .4rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.figure-downloads { padding-left: 1.25rem; line-height: 2.2; }
+.figure-citation { border-top: 1px solid var(--card-border); padding-top: 1.5rem; margin-top: 2rem; overflow-wrap: anywhere; }
+#reproduce { scroll-margin-top: 7rem; }
+@media (max-width: 760px) {
+  .navbar { flex-wrap: wrap; gap: .7rem; padding: 1rem; }
+  .nav-links { flex-wrap: wrap; gap: .6rem 1rem; }
+  .nav-links a { font-size: .82rem; }
+  .figure-page { padding: 2rem 1rem 4rem; }
+  .figure-comparison { grid-template-columns: 1fr; }
+  .figure-metrics { grid-template-columns: 1fr; gap: .6rem; }
+  .figure-metrics > div { display: flex; align-items: center; gap: 1rem; padding: .8rem 1rem; }
+  .figure-metrics strong { min-width: 6rem; font-size: 1.5rem; }
+  .figure-metrics span { margin: 0; }
+  .check-grid { grid-template-columns: 1fr 1fr; }
+  .figure-equations, .figure-code { padding: 1rem; }
+}
+@media (max-width: 400px) { .check-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  .bg-animated, .star, .orbit-ring, .orbit-dot, .nav-logo { animation: none !important; }
+}

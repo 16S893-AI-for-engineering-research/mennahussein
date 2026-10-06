@@ -1,0 +1,7 @@
+# Tested with Python 3.9.7, NumPy 2.0.2, SciPy 1.13.1 and Matplotlib 3.9.4.
+# HiGHS is included with SciPy; no commercial solver or license is needed.
+numpy>=1.24,<3
+scipy>=1.11,<2
+matplotlib>=3.6,<4
+# Only needed to rerun the optional PDF reference extraction:
+PyMuPDF>=1.23,<2
