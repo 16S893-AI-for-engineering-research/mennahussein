@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Menna Hussein — Dev Log</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="devlog.css" />
 </head>
 <body>
   <div class="bg-animated"></div>
@@ -21,11 +22,11 @@
       <li><a href="research.html">Research Interests</a></li>
       <li><a href="project.html">Project</a></li>
       <li><a href="figure.html">Regenerated Figure</a></li>
-      <li><a href="devlog.html">Dev Log</a></li>
+      <li><a href="devlog.html" aria-current="page">Dev Log</a></li>
     </ul>
   </nav>
 
-  <main>
+  <main class="devlog-page">
     <section class="reveal">
       <div class="eyebrow-row">
         <span class="hero-eyebrow">Behind the Scenes</span>
@@ -39,28 +40,132 @@
       </p>
     </section>
 
-    <section class="reveal">
+    <section id="figure-model-comparison" class="model-comparison" aria-labelledby="model-comparison-heading">
+      <div class="log-meta">
+        <time class="log-date" datetime="2026-10-05">Oct 5, 2026</time>
+        <span class="log-tag shipped">Figure update shipped</span>
+        <span class="log-tag content">Model comparison</span>
+      </div>
+      <h2 class="section-title" id="model-comparison-heading">Figure 3: Sonnet vs. the current model</h2>
+      <p class="comparison-lead">
+        The first attempt produced a polished page, but its trajectory did not match the paper.
+        The second pass shifted the emphasis from presenting a plausible result to checking the paper,
+        reconstructing its numerical experiment, and measuring the difference. The improvement was not
+        just a better-looking curve: it was a more reproducible and more carefully qualified result.
+      </p>
+      <p class="comparison-context">
+        <strong>Scope:</strong> this compares two attempts on this specific task, not the models’ overall capabilities.
+        <strong>Sonnet</strong> is the project author’s identification of the earlier model; its exact version
+        is not recorded here. The current session reports the model identifier <code>openai/gpt-6-astra</code>.
+        The second pass had access to the paper, the earlier output, and explicit feedback that the figure was wrong;
+        this was not an identical-prompt, controlled benchmark.
+      </p>
+
+      <div class="model-table-wrap" role="region" aria-label="Comparison of the two figure-regeneration attempts" tabindex="0">
+        <table class="model-table">
+          <caption>Comparison against the previous page at <code>bf8b763</code> and the reconstruction at <code>37dd304</code>.</caption>
+          <thead>
+            <tr><th scope="col">Aspect</th><th scope="col">Sonnet / previous attempt</th><th scope="col">Current model / reconstruction</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">What worked</th>
+              <td>Created the figure tab, integrated it with the site, and provided an accessible mathematical narrative and interactive Plotly charts.</td>
+              <td>Retained the page’s purpose, but added a source-versus-result comparison, an executable solver, and explicit validation.</td>
+            </tr>
+            <tr>
+              <th scope="row">Methodology</th>
+              <td>The page described SciPy SLSQP with a smooth gravity field and 15 intervals, while claiming an exact reproduction. This differed from the paper’s numerical method.</td>
+              <td>Implemented Appendix A’s discrete dynamics, tangent-line gravity regions, binary region selection, and 32-sided thrust polygons using HiGHS MILP solves.</td>
+            </tr>
+            <tr>
+              <th scope="row">Reading the evidence</th>
+              <td>Followed the written zero initial velocity and step count without identifying their conflict with the plots.</td>
+              <td>Inspected the PDF graphics: Figure 4 starts near +200 m/s downrange, and Figure 3 contains 15 state points—14 intervals. Separated stated parameters from inferred ones.</td>
+            </tr>
+            <tr>
+              <th scope="row">Trajectory and thrust</th>
+              <td>Downrange decreased immediately, the horizontal axis was reversed, and thrust stayed at 2 m/s² for 14 of 15 intervals before a small final increase. These did not reproduce the published profiles.</td>
+              <td>Recovered the initial rightward motion to roughly 32 km downrange and the subsequent turn toward touchdown. Thrust rises toward the upper bound around mid-flight, consistent with the published braking pattern.</td>
+            </tr>
+            <tr>
+              <th scope="row">Validation</th>
+              <td>The committed page contained numerical arrays and qualitative checks, but no accompanying Python solver, test suite, or measured Figure 3 comparison.</td>
+              <td>Added 11 passing automated tests, boundary and dynamics residuals, solver-gap checks, and a node-by-node comparison: 47 m RMS and 103 m maximum difference.</td>
+            </tr>
+            <tr>
+              <th scope="row">Confidence and limitations</th>
+              <td>Asserted that the result was globally optimal and that the theorem guaranteed the plotted discrete solution, without adequate numerical support.</td>
+              <td>Distinguished fixed-time MILP optimality from continuous-time theory. Reported the inferred outer polygon’s small thrust-bound violation and the unresolved final-time discrepancy instead of claiming complete replication.</td>
+            </tr>
+            <tr>
+              <th scope="row">Presentation tradeoff</th>
+              <td>Interactive charts offered hover inspection, but depended on an external Plotly CDN.</td>
+              <td>Local SVGs work offline and show the original, reconstruction, overlays, and diagnostics. They trade away interactive hover in favor of portable figures and downloadable full-precision data.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="comparison-stats" aria-label="Measured result from the current reconstruction">
+        <div><strong>47 m</strong><span>RMS node-position difference</span></div>
+        <div><strong>103 m</strong><span>Maximum difference over an 80 km descent</span></div>
+        <div><strong>11 / 11</strong><span>Automated tests passing</span></div>
+      </div>
+      <p class="comparison-context">
+        The position differences are against vertices extracted from the published PDF, whose drawing precision
+        is on the order of tens of metres—not against the authors’ raw arrays. Those trajectory vertices are used
+        only for comparison after solving, never as an optimization target. There is no directly comparable
+        published error metric for the Sonnet attempt, so these numbers are not a model-to-model error ratio.
+      </p>
+
+      <aside class="comparison-caveat">
+        <h3>Closer to Figure 3 does not mean every discrepancy is solved</h3>
+        <p>
+          The matching reconstruction holds the reported final time at <strong>490 s</strong>, while an independent
+          search on the reconstructed model finds a lower cost near <strong>451.9 s</strong>. It also uses an inferred
+          <strong>outer</strong> thrust polygon, permitting a norm of <strong>10.0484 m/s²</strong> rather than exactly
+          10 m/s²; the text specifies an inner polygon. These are documented departures and unresolved differences,
+          not evidence that the original continuous-time problem has been reproduced exactly.
+        </p>
+      </aside>
+      <h3 class="comparison-takeaway">What I learned from the comparison</h3>
+      <p class="comparison-lead">
+        On this task, Sonnet was useful for getting the website and explanation started. The current pass did better
+        at auditing the source, exposing inconsistent inputs, and leaving behind a runnable experiment with checks.
+        The practical lesson is to ask an AI coding assistant for <strong>parameter provenance, a reproducible solver,
+        an original-versus-computed comparison, and explicit failure checks</strong>—not just a convincing plot and a
+        confident explanation. This case does not establish which model is generally better or more efficient;
+        comparable time, token, and cost measurements were not collected.
+      </p>
+      <ul class="comparison-links">
+        <li><a href="figure.html">View the updated figure and diagnostic plots</a></li>
+        <li><a href="scripts/README.md">Read the reproduction notes and limitations</a></li>
+        <li><a href="https://github.com/16S893-AI-for-engineering-research/mennahussein/commit/bf8b7633f2fdd44e80d0b9d2ab04cf6d53d3fed4" target="_blank" rel="noopener">Previous attempt · bf8b763</a></li>
+        <li><a href="https://github.com/16S893-AI-for-engineering-research/mennahussein/commit/37dd304" target="_blank" rel="noopener">Published reconstruction · 37dd304</a></li>
+      </ul>
+    </section>
+
+    <section aria-label="Earlier development history">
       <div class="timeline">
 
         <div class="timeline-item">
           <div class="log-meta">
-            <span class="log-date">Sep 30, 2026</span>
-            <span class="log-tag shipped">Shipped</span>
+            <span class="log-date">Sep 30 – Oct 1, 2026</span>
+            <span class="log-tag">Superseded experiment</span>
           </div>
-          <h3>Regenerated Figure page</h3>
+          <h3>First Regenerated Figure page — Sonnet attempt</h3>
           <p>
-            Added a new tab that re-derives and re-plots a result from
-            Blackmore, Açıkmeşe &amp; Carson's
-            <em>"Lossless convexification of control constraints for a class
-            of nonlinear optimal control problems"</em> (Systems &amp;
-            Control Letters, 2012) — the nonlinear-gravity soft-landing
-            trajectory and thrust-magnitude profile from Problem 3 /
-            Theorem 1.
+            Added the figure tab and a first attempt at the nonlinear-gravity soft-landing result from
+            Blackmore, Açıkmeşe &amp; Carson (2012), then revised it on October 1. The page described an
+            SLSQP-based direct transcription and displayed trajectory and thrust data using Plotly.
+            Later comparison with the paper showed that the plotted result did not match Figure 3.
           </p>
           <ul>
-            <li>Re-solved the optimal control problem from scratch in Python (SciPy SLSQP, direct transcription, N = 15 steps)</li>
-            <li>Interactive Plotly recreation of the descent trajectory and thrust-magnitude vs. time plots, replacing the paper's static figure</li>
-            <li>Confirms the thrust-acceleration magnitude saturates at the nonconvex bounds ε₁/ε₂, exactly as the lossless convexification theorem predicts</li>
+            <li>Established the website layout, paper link, mathematical explanation, and interactive charts.</li>
+            <li>The trajectory and braking profile were inconsistent with the published figures.</li>
+            <li>The earlier claim that this confirmed the theorem’s prediction was not justified by the numerical evidence and has been withdrawn.</li>
+            <li>Replaced by the reproducible MILP reconstruction documented in the October 5 comparison above.</li>
           </ul>
         </div>
 
